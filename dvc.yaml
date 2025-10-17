@@ -1,0 +1,11 @@
+stages:
+  train:
+    cmd: python src/train.py --params params.yaml --data data/Pakistan_House_Price.csv --model-out model/model.pkl --metrics-out metrics.json
+    deps:
+      - src/train.py
+      - data/Pakistan_House_Price.csv
+      - params.yaml
+    outs:
+      - model/model.pkl
+      - metrics.json:
+          cache: false
