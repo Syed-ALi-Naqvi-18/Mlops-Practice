@@ -2,10 +2,12 @@ from flask import Flask, request, jsonify
 import joblib
 import numpy as np
 import os
+import pandas as pd
+from sklearn.preprocessing import LabelEncoder
 
 app = Flask(__name__)
 
-# Load the trained model
+# Global variables to store model and encoders
 model = None
 label_encoders = {}
 
@@ -47,20 +49,22 @@ def predict():
         # Get input data from request
         data = request.get_json()
         
-        # Extract features (in a real scenario, you would need to preprocess these)
-        features = [
-            data.get('area', 0),
-            data.get('bedrooms', 0),
-            data.get('baths', 0),
-            data.get('city', 0),  # This would need encoding in a real scenario
-            data.get('province_name', 0)  # This would need encoding in a real scenario
-        ]
+        # For this simple example, we'll use dummy encoding
+        # In a real application, you would save and load the label encoders
+        area = float(data.get('area', 0))
+        bedrooms = float(data.get('bedrooms', 0))
+        baths = float(data.get('baths', 0))
+        city = 0  # Dummy encoding
+        province_name = 0  # Dummy encoding
+        
+        # Create feature array
+        features = [area, bedrooms, baths, city, province_name]
         
         # Make prediction
         prediction = model.predict([features])[0]
         
         return jsonify({
-            "predicted_price": prediction,
+            "predicted_price": float(prediction),
             "currency": "PKR"
         })
     except Exception as e:
