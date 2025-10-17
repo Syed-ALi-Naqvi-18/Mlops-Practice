@@ -4,7 +4,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def home():
-    return "Welcome to HousePK Flask app by Team MLOps"
+    return "Welcome to HousePK - API Feature Added"
 
 @app.route('/login')
 def login():
